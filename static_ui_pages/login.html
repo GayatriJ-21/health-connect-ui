@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Login & Book Appointment - Healthcare Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav>
+    <h1>Healthcare Appointment Portal</h1>
+    <a href="register.html">Register</a> |
+    <a href="providers.html">Providers</a> |
+    <a href="appointments.html">Appointments</a>
+  </nav>
+
+<section class="hero hero-center">
+  <div class="form-box" id="loginBox">
+    <h2>Login</h2>
+    <form id="loginForm">
+      <input type="email" name="email" placeholder="Email" required />
+      <input type="password" name="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+    <div id="loginMsg"></div>
+  </div>
+
+  <div class="form-box" id="bookSection" style="display:none;">
+    <h2>Book Appointment</h2>
+    <form id="bookForm">
+      <input name="provider_id" placeholder="Provider ID" required />
+      <input name="date_appt" placeholder="Appointment (YYYY-MM-DDTHH:MM:SS)" required />
+      <input name="problem" placeholder="Describe your problem" required />
+      <button type="submit">Book Appointment</button>
+    </form>
+    <div id="bookMsg"></div>
+  </div>
+</section>
+
+
+  <script src="main.js"></script>
+  <script>
+    // after login, show book form
+    document.addEventListener("loginSuccess", () => {
+      document.getElementById("bookSection").style.display = "block";
+    });
+  </script>
+</body>
+</html>

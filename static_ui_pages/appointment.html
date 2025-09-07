@@ -1,0 +1,29 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <title>Appointments - Healthcare</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <nav><h1>Healthcare Appointment Portal</h1>
+    
+      <a href="register.html">Register</a> | 
+      <a href="login.html">Login</a> | 
+      <a href="providers.html">Providers</a> |  
+      <a href="appointment.html">Appointments</a>
+  </nav>
+  <section class="hero hero-center">
+    <div class="form-box">
+      <h2>View Appointments</h2>
+      <label>Patient ID:</label>
+      <input id="patientIdInput" placeholder="Patient ID" />
+      <label>Doctor ID:</label>
+      <input id="doctorIdInput" placeholder="Doctor ID" />
+      <button type="button" onclick="loadAppointments()">Load Appointments</button>
+      <div id="appointments"></div>
+    </div>
+  </section>
+  <script src="main.js"></script>
+</body>
+</html>
