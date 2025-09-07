@@ -1,4 +1,4 @@
-name: Build and deploy frontend to Azure Web App - health-connect-ui
+name: Deploy static frontend to Azure Web App - health-connect-ui
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -24,16 +24,16 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4A32BD7C9A5242AD846D75782BECDA7D }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3F9E5C53E53541D9B7C61D9FB3DAED33 }}
 
-      - name: Prepare deployment package
+      - name: Prepare static site
         run: |
           mkdir deploy
           cp -r static_ui_pages/* deploy/
           cd deploy
           zip -r ../frontend.zip .
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App (bypass Oryx)
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'health-connect-ui'   # 👈 your Web App name
+          app-name: 'health-connect-ui'
           publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
           package: './frontend.zip'
