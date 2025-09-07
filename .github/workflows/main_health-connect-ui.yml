@@ -7,19 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: read #This is required for actions/checkout
-
-    steps:
-      - uses: actions/checkout@v4
-
-  deploy:
-    runs-on: ubuntu-latest
-    permissions:
-      id-token: write #This is required for requesting the JWT
-      contents: read #This is required for actions/checkout
+      id-token: write
+      contents: read
 
     steps:
       - name: Checkout repository
@@ -32,11 +24,14 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4A32BD7C9A5242AD846D75782BECDA7D }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3F9E5C53E53541D9B7C61D9FB3DAED33 }}
 
-      # Deploy directly to Azure Web App using publish profile
+      - name: Create ZIP package
+        run: |
+          cd static_ui_pages
+          zip -r ../frontend.zip .
+
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
         with:
-          app-name: 'health-connect-ui' # 👈 your Azure Web App name
-          package: './static_ui_pages'
-
-
+          app-name: 'health-connect-ui'   # 👈 your Web App name
+          publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
+          package: './frontend.zip'
