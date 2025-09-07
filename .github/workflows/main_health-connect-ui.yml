@@ -24,9 +24,11 @@ jobs:
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_4A32BD7C9A5242AD846D75782BECDA7D }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_3F9E5C53E53541D9B7C61D9FB3DAED33 }}
 
-      - name: Create ZIP package
+      - name: Prepare deployment package
         run: |
-          cd static_ui_pages
+          mkdir deploy
+          cp -r static_ui_pages/* deploy/
+          cd deploy
           zip -r ../frontend.zip .
 
       - name: Deploy to Azure Web App
